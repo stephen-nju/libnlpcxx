@@ -82,6 +82,8 @@ inline size_t readline(char** __restrict line, size_t* __restrict len, FILE* __r
     return -1;
 }
 
+string trim(const string& s);
+
 }  // namespace nlptools
 
 #endif  // UTIL_H_
