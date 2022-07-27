@@ -12,6 +12,7 @@ set(
   TEST_SRC
   testharness.h
   tokenizer_test.cc
+  utils_test.cc
 )
 
 if (MSVC AND WIN32)
@@ -54,5 +55,5 @@ if(LIBNLP_ENABLE_TEST)
   gtest_add_tests(TARGET DemoTest)
 endif(LIBNLP_ENABLE_TEST)
 
-add_executable(leetcode leetcode_test.cc)
-target_link_libraries(leetcode ${PROJECT_NAME})
+# add_executable(leetcode leetcode_test.cc)
+# target_link_libraries(leetcode ${PROJECT_NAME})

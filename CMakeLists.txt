@@ -14,6 +14,11 @@ set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
 include(CPack)
 
 
+if(LIBNLP_ENABLE_TEST)
+  enable_testing()
+endif(LIBNLP_ENABLE_TEST)
+
+
 add_subdirectory(thirdparty)
 add_subdirectory(src)
 add_subdirectory(test)

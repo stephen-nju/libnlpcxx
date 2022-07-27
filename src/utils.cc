@@ -1,14 +1,5 @@
 
-
 #include "utils.h"
-
-#include <string.h>
-
-#include "absl/strings/string_view.h"
-#include "absl/strings/strip.h"
-#include "spdlog/spdlog.h"
-#include "utf8proc.h"
-
 namespace nlptools {
 bool is_whitespace_char(int c) {
     const char* cat = utf8proc_category_string(c);
@@ -19,8 +10,8 @@ bool is_whitespace_char(int c) {
     return cat[0] == 'Z' && cat[1] == 's';
 }
 
-size_t utf8proc_iterate_reversed(const uint8_t* str, size_t start, int32_t* dst) {
-    size_t len = 0;
+ssize_t utf8proc_iterate_reversed(const uint8_t* str, ssize_t start, int32_t* dst) {
+    ssize_t len = 0;
 
     const uint8_t* ptr = str + start;
 
@@ -35,49 +26,57 @@ size_t utf8proc_iterate_reversed(const uint8_t* str, size_t start, int32_t* dst)
 
     int32_t ch = 0;
 
-    size_t ret_len = utf8proc_iterate(ptr, len, &ch);
+    ssize_t ret_len = utf8proc_iterate(ptr, len, &ch);
     *dst = ch;
     return ret_len;
 }
 
 absl::string_view lstrip(absl::string_view& s) {
     const char* text_data = s.data();
-    size_t start = 0;
     size_t pos = 0;
     int codepoint;
     char dst[4];
-    for (size_t i = 0; i < std::strlen(text_data); i++) {
+    while (pos < std::strlen(text_data)) {
         int len = utf8proc_iterate((const utf8proc_uint8_t*)text_data + pos, -1, &codepoint);
         if (len < 0) {
             spdlog::info("Decode UTF-8 Error");
             break;
             // 抛出异常
         }
-        if (is_whitespace_char(codepoint)) {
-            pos += len;
-        } else {
-            start = pos;
+        if (!is_whitespace_char(codepoint)) {
             break;
         }
+        pos += len;
     }
-    return s.substr(start, -1);
+    return s.substr(pos, -1);
 };
 
 absl::string_view rstrip(absl::string_view& s) {
-    const char* text_data = s.data();
-    size_t end = std::strlen(text_data);
-    // 先按照utf8切分
-    int codepoint;
-    char dst[4];
-    vector<size_t> start_index;
-    size_t start = 0;
-    start_index.emplace_back(start);
-    while (start < end) {
-        int len = utf8proc_iterate((const utf8proc_uint8_t*)text_data + pos, -1, &codepoint);
+    const char* str = s.data();
+    size_t spaces = 0;
+    uint8_t* ptr = (uint8_t*)str;
+    int32_t ch = 0;
+    ssize_t pos = std::strlen(str);
+
+    while (pos > 0) {
+        ssize_t char_len = utf8proc_iterate_reversed(ptr, pos, &ch);
+
+        if (char_len <= 0) {
+            spdlog::info("Decode UTF-8 Error");
+            break;
+        }
+        if (!is_whitespace_char(ch)) {
+            break;
+        }
+        pos -= char_len;
     }
+
+    return s.substr(0, pos);
 };
 
-absl::string_view strip(absl::string_view& s){
-
+absl::string_view strip(absl::string_view& s) {
+    absl::string_view s1 = lstrip(s);
+    absl::string_view s2 = rstrip(s1);
+    return s2;
 };
 }  // namespace nlptools
