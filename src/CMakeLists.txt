@@ -75,7 +75,7 @@ set(TOKENIZER_SRC
 # add_executable(viterbi ${VITERBI_SRC})
 
 # 动态库
-if (LIBNLP_ENABLE_SHARED)
+if (BUILD_SHARED_LIBS)
   set(ORIGIN_DYNAMIC_LIB_NAME ${PROJECT_NAME}-dynamic)
   add_library(${ORIGIN_DYNAMIC_LIB_NAME} SHARED ${TOKENIZER_SRC} ${LEET_CODE_SRC})
   message(STATUS "building dynamic lib ${ORIGIN_DYNAMIC_LIB_NAME}")
@@ -92,7 +92,7 @@ endif()
 
 
 add_library(${PROJECT_NAME} STATIC ${TOKENIZER_SRC} ${LEET_CODE_SRC})
-target_link_libraries(${PROJECT_NAME} PUBLIC ${NLPTOOL_LIBS})
+target_link_libraries(${PROJECT_NAME} PRIVATE ${NLPTOOL_LIBS})
 
 
 add_subdirectory(model)
