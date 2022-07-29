@@ -92,7 +92,12 @@ endif()
 
 
 add_library(${PROJECT_NAME} STATIC ${TOKENIZER_SRC} ${LEET_CODE_SRC})
-target_link_libraries(${PROJECT_NAME} PRIVATE ${NLPTOOL_LIBS})
+# target_include_directories(${PROJECT_NAME} PUBLIC 
+#                           ${THIRDPARTY_INCLUDE_DIR}/utf8proc 
+#                           ${THIRDPARTY_INCLUDE_DIR}/spdlog/includes
+#                           ${THIRDPARTY_INCLUDE_DIR}/abseil-cpp/absl/strings
+# )
+target_link_libraries(${PROJECT_NAME} PUBLIC ${NLPTOOL_LIBS})
 
 
 add_subdirectory(model)

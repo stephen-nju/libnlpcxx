@@ -1,22 +1,32 @@
 cmake_minimum_required(VERSION 3.15)
 
 project(nlptool VERSION 0.1.0)
-include(cmake/Common.cmake)
-
+# global options
+option(ENABLE_CPPCHECK "Enable static analysis with cppcheck" OFF)
+option(ENABLE_CLANG_TIDY "Enable static analysis with clang-tidy" OFF)
+# cppcheck
 option(BUILD_SHARED_LIBS "Builds shared libaries in addition to static libraries." ON)
-message(STATUS "LIBNLP_ENABLE_SHARED= ${LIBNLP_ENABLE_SHARED}")
+message(STATUS "BUILD_SHARED_LIBS= ${BUILD_SHARED_LIBS}")
 option(BUILD_TESTS "enable test " OFF)
 
 
-set(CPACK_PROJECT_NAME ${PROJECT_NAME})
-set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
-include(CPack)
+
+include(cmake/Common.cmake)
+include(cmake/Sanitizers.cmake)
+include(cmake/StaticAnalyzers.cmake)
+
 
 
 if(BUILD_TESTS)
   enable_testing()
   add_subdirectory(test)
 endif(BUILD_TESTS)
+
+
+set(CPACK_PROJECT_NAME ${PROJECT_NAME})
+set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
+include(CPack)
+
 
 
 add_subdirectory(thirdparty)

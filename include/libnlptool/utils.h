@@ -12,18 +12,9 @@
 #include <cstdio>
 #include <functional>
 #include <memory>
-#include <random>
-#include <sstream>
-#include <string>
-#include <thread>
-#include <utility>
-#include <vector>
 
 #include "absl/strings/string_view.h"
-#include "absl/strings/strip.h"
 #include "commom.h"
-#include "spdlog/spdlog.h"
-#include "utf8proc.h"
 
 #ifdef _MSC_VER
 #    define _CRT_SECURE_NO_WARNINGS 1
@@ -86,6 +77,7 @@ inline size_t readline(char** __restrict line, size_t* __restrict len, FILE* __r
     return -1;
 }
 ssize_t utf8proc_iterate_reversed(const uint8_t* str, ssize_t start, int32_t* dst);
+
 absl::string_view rstrip(absl::string_view& s);
 absl::string_view lstrip(absl::string_view& s);
 absl::string_view strip(absl::string_view& s);

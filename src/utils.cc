@@ -1,5 +1,15 @@
 
 #include "utils.h"
+#include <random>
+#include <sstream>
+#include <string>
+#include <thread>
+#include <utility>
+#include <vector>
+#include "absl/strings/strip.h"
+#include "commom.h"
+#include "spdlog/spdlog.h"
+#include "utf8proc.h"
 namespace nlptools {
 bool is_whitespace_char(int c) {
     const char* cat = utf8proc_category_string(c);
