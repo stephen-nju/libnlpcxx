@@ -5,15 +5,12 @@
 #include <stdio.h>
 #include <string.h>
 
-#include <algorithm>
 #include <cerrno>
 #include <cstddef>
 #include <cstdint>
 #include <cstdio>
-#include <functional>
 #include <memory>
 
-#include "absl/strings/string_view.h"
 #include "commom.h"
 
 #ifdef _MSC_VER
@@ -78,9 +75,9 @@ inline size_t readline(char** __restrict line, size_t* __restrict len, FILE* __r
 }
 ssize_t utf8proc_iterate_reversed(const uint8_t* str, ssize_t start, int32_t* dst);
 
-absl::string_view rstrip(absl::string_view& s);
-absl::string_view lstrip(absl::string_view& s);
-absl::string_view strip(absl::string_view& s);
+char* rstrip(char* s);
+char* lstrip(char* s);
+char* strip(char* s);
 
 }  // namespace nlptools
 

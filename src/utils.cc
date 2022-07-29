@@ -1,15 +1,20 @@
 
 #include "utils.h"
+
+#include <cstring>
 #include <random>
 #include <sstream>
 #include <string>
 #include <thread>
 #include <utility>
 #include <vector>
+
+#include "absl/strings/string_view.h"
 #include "absl/strings/strip.h"
 #include "commom.h"
 #include "spdlog/spdlog.h"
 #include "utf8proc.h"
+
 namespace nlptools {
 bool is_whitespace_char(int c) {
     const char* cat = utf8proc_category_string(c);
@@ -41,32 +46,27 @@ ssize_t utf8proc_iterate_reversed(const uint8_t* str, ssize_t start, int32_t* ds
     return ret_len;
 }
 
-absl::string_view lstrip(absl::string_view& s) {
-    const char* text_data = s.data();
+char* lstrip(char* s) {
     size_t pos = 0;
     int codepoint;
     char dst[4];
-    while (pos < std::strlen(text_data)) {
-        int len = utf8proc_iterate((const utf8proc_uint8_t*)text_data + pos, -1, &codepoint);
-        if (len < 0) {
-            spdlog::info("Decode UTF-8 Error");
-            break;
-            // 抛出异常
-        }
+    while (pos < std::strlen(s)) {
+        int len = utf8proc_iterate((const utf8proc_uint8_t*)s + pos, -1, &codepoint);
+        assert(len > 0);
         if (!is_whitespace_char(codepoint)) {
             break;
         }
         pos += len;
     }
+
     return s.substr(pos, -1);
 };
 
-absl::string_view rstrip(absl::string_view& s) {
-    const char* str = s.data();
+char* rstrip(char* s) {
     size_t spaces = 0;
-    uint8_t* ptr = (uint8_t*)str;
+    uint8_t* ptr = (uint8_t*)s;
     int32_t ch = 0;
-    ssize_t pos = std::strlen(str);
+    ssize_t pos = std::strlen(s);
 
     while (pos > 0) {
         ssize_t char_len = utf8proc_iterate_reversed(ptr, pos, &ch);
@@ -81,12 +81,12 @@ absl::string_view rstrip(absl::string_view& s) {
         pos -= char_len;
     }
 
-    return s.substr(0, pos);
+    return;
 };
 
-absl::string_view strip(absl::string_view& s) {
-    absl::string_view s1 = lstrip(s);
-    absl::string_view s2 = rstrip(s1);
-    return s2;
-};
+// char* strip(char* s) {
+//     absl::string_view s1 = lstrip(s);
+//     absl::string_view s2 = rstrip(s1);
+//     return s2;
+// };
 }  // namespace nlptools
