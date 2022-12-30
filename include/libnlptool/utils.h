@@ -17,7 +17,6 @@
 #    define _CRT_SECURE_NO_WARNINGS 1
 #endif
 
-using namespace std;
 namespace nlptools {
 
 inline size_t readline(char** __restrict line, size_t* __restrict len, FILE* __restrict fp) {

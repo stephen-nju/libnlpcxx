@@ -1,11 +1,16 @@
 
+#include "thrdpool.h"
+
 #include <errno.h>
-#include <pthread.h>
 #include <stdlib.h>
 #include <string.h>
 
 #include "msgqueue.h"
-#include "thrdpool.h"
+#if defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__)
+#    include "lib/pthread.h"
+#else
+#    include <pthread.h>
+#endif
 
 struct __thrdpool {
     msgqueue_t* msgqueue;

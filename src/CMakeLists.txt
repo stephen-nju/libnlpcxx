@@ -68,7 +68,7 @@ set(TOKENIZER_SRC
 # )
 
 # add_executable(viterbi ${VITERBI_SRC})
-add_subdirectory(model)
+# add_subdirectory(model)
 add_subdirectory(core)
 
 # 动态库
@@ -88,6 +88,7 @@ endif()
 
 # 静态库
 add_library(${PROJECT_NAME} STATIC ${TOKENIZER_SRC} ${LEET_CODE_SRC} $<TARGET_OBJECTS:core>)
+# add_library(${PROJECT_NAME} STATIC ${TOKENIZER_SRC} ${LEET_CODE_SRC})
 
 # target_include_directories(${PROJECT_NAME} PUBLIC
 # ${THIRDPARTY_INCLUDE_DIR}/utf8proc

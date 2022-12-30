@@ -2,7 +2,12 @@
 #include "msgqueue.h"
 
 #include <errno.h>
-#include <pthread.h>
+
+#if defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__)
+#    include "lib/pthread.h"
+#else
+#    include <pthread.h>
+#endif
 #include <stdlib.h>
 
 struct __msgqueue {

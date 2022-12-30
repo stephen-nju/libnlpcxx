@@ -1,13 +1,14 @@
 ﻿#ifndef TOKENIZER_H
 #define TOKENIZER_H
 
+#include <cstddef>
+#include <cstdint>
 #include <cstdio>
 #include <map>
 #include <memory>
 #include <string>
 #include <unordered_map>
 #include <vector>
-
 using std::map;
 using std::string;
 using std::unordered_map;
