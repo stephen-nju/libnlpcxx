@@ -1,4 +1,5 @@
 # 添加ctest的头文件
+
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../include/libnlptool)
 
 include_directories(
@@ -33,7 +34,7 @@ endif ()
   # -DBOOST_ALL_NO_LIB can also be provided manually.
 
 
-find_package(Boost 1.79 REQUIRED COMPONENTS date_time filesystem)
+find_package(Boost 1.7 REQUIRED COMPONENTS date_time filesystem)
 if(Boost_FOUND)
     # add_definitions(${Boost_LIB_DIAGNOSTIC_DEFINITIONS})
     include_directories(${Boost_INCLUDE_DIRS})
@@ -45,15 +46,14 @@ else()
     MESSAGE( FATAL_ERROR  "BOOST NOT FOUND PLEASE install BOOST")
 endif()
 
-
-if(LIBNLP_ENABLE_TEST)
+if(ENABLE_BUILD_TESTS)
   enable_testing()
   include(GoogleTest)
   add_executable(DemoTest ${TEST_SRC})
   target_link_libraries(DemoTest ${PROJECT_NAME} gtest_main)  
   target_link_libraries(DemoTest Boost::filesystem)
   gtest_add_tests(TARGET DemoTest)
-endif(LIBNLP_ENABLE_TEST)
+endif(ENABLE_BUILD_TESTS)
 
 # add_executable(leetcode leetcode_test.cc)
 # target_link_libraries(leetcode ${PROJECT_NAME})
