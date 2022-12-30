@@ -46,43 +46,43 @@ ssize_t utf8proc_iterate_reversed(const uint8_t* str, ssize_t start, int32_t* ds
     return ret_len;
 }
 
-char* lstrip(char* s) {
-    size_t pos = 0;
-    int codepoint;
-    char dst[4];
-    while (pos < std::strlen(s)) {
-        int len = utf8proc_iterate((const utf8proc_uint8_t*)s + pos, -1, &codepoint);
-        assert(len > 0);
-        if (!is_whitespace_char(codepoint)) {
-            break;
-        }
-        pos += len;
-    }
+// char* lstrip(char* s) {
+//     size_t pos = 0;
+//     int codepoint;
+//     char dst[4];
+//     while (pos < std::strlen(s)) {
+//         int len = utf8proc_iterate((const utf8proc_uint8_t*)s + pos, -1, &codepoint);
+//         assert(len > 0);
+//         if (!is_whitespace_char(codepoint)) {
+//             break;
+//         }
+//         pos += len;
+//     }
 
-    return s.substr(pos, -1);
-};
+//     return ;
+// };
 
-char* rstrip(char* s) {
-    size_t spaces = 0;
-    uint8_t* ptr = (uint8_t*)s;
-    int32_t ch = 0;
-    ssize_t pos = std::strlen(s);
+// char* rstrip(char* s) {
+//     size_t spaces = 0;
+//     uint8_t* ptr = (uint8_t*)s;
+//     int32_t ch = 0;
+//     ssize_t pos = std::strlen(s);
 
-    while (pos > 0) {
-        ssize_t char_len = utf8proc_iterate_reversed(ptr, pos, &ch);
+//     while (pos > 0) {
+//         ssize_t char_len = utf8proc_iterate_reversed(ptr, pos, &ch);
 
-        if (char_len <= 0) {
-            spdlog::info("Decode UTF-8 Error");
-            break;
-        }
-        if (!is_whitespace_char(ch)) {
-            break;
-        }
-        pos -= char_len;
-    }
+//         if (char_len <= 0) {
+//             spdlog::info("Decode UTF-8 Error");
+//             break;
+//         }
+//         if (!is_whitespace_char(ch)) {
+//             break;
+//         }
+//         pos -= char_len;
+//     }
 
-    return;
-};
+//     return;
+// };
 
 // char* strip(char* s) {
 //     absl::string_view s1 = lstrip(s);

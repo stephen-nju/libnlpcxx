@@ -1,12 +1,13 @@
 # Set a default build type if none was specified
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 
 if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
   message(STATUS "Setting build type to 'RelWithDebInfo' as none was specified.")
   set(CMAKE_BUILD_TYPE
-      RelWithDebInfo
+      RelWithDebInfo            start_positions = [idx for idx, tmp in enumerate(start_pred) if tmp and label_mask[idx]]
+      end_positions = [idx for idx, tmp in enumerate(end_pred) if tmp and label_mask[idx]]
       CACHE STRING "Choose the type of build." FORCE)
   # Set the possible values of build type for cmake-gui, ccmake
   set_property(
