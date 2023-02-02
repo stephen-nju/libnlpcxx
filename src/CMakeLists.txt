@@ -58,7 +58,6 @@ set(LEET_CODE_SRC
 # tokenizer 源文件
 set(TOKENIZER_SRC
   utils.cc
-  ac_automation.cc
   tokenizer.cc
 )
 
@@ -69,12 +68,12 @@ set(TOKENIZER_SRC
 
 # add_executable(viterbi ${VITERBI_SRC})
 # add_subdirectory(model)
-add_subdirectory(core)
+# add_subdirectory(core)
 
 # 动态库
 if(BUILD_SHARED_LIBS)
   set(ORIGIN_DYNAMIC_LIB_NAME ${PROJECT_NAME}-dynamic)
-  add_library(${ORIGIN_DYNAMIC_LIB_NAME} SHARED ${TOKENIZER_SRC} ${LEET_CODE_SRC} $<TARGET_OBJECTS:core>)
+  add_library(${ORIGIN_DYNAMIC_LIB_NAME} SHARED ${TOKENIZER_SRC} ${LEET_CODE_SRC})
   message(STATUS "building dynamic lib ${ORIGIN_DYNAMIC_LIB_NAME}")
   set_target_properties(${ORIGIN_DYNAMIC_LIB_NAME} PROPERTIES OUTPUT_NAME ${PROJECT_NAME})
   target_link_libraries(${ORIGIN_DYNAMIC_LIB_NAME} PRIVATE ${NLPTOOL_LIBS})
@@ -87,7 +86,7 @@ if(BUILD_SHARED_LIBS)
 endif()
 
 # 静态库
-add_library(${PROJECT_NAME} STATIC ${TOKENIZER_SRC} ${LEET_CODE_SRC} $<TARGET_OBJECTS:core>)
+add_library(${PROJECT_NAME} STATIC ${TOKENIZER_SRC} ${LEET_CODE_SRC})
 # add_library(${PROJECT_NAME} STATIC ${TOKENIZER_SRC} ${LEET_CODE_SRC})
 
 # target_include_directories(${PROJECT_NAME} PUBLIC
